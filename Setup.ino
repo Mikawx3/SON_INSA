@@ -47,20 +47,24 @@ AudioConnection          patchCord7(mixer, 1, out, 1);
 // Initialisation des class
 
 Dico dico;
+std::vector<float> recordedNotesfreq; // Vecteur pour stocker les notes enregistrées freq
 
 Synth* synth_p = &synth;
+//std::vector<float>* recordedNotesfreqp = &recordedNotesfreq;
 Recorder recorder(synth_p);
 
 
 // Initialisation des variables / dicos 
 
 std::vector<std::string> recordedNotes; // Vecteur pour stocker les notes enregistrées
-std::vector<float> recordedNotesfreq; // Vecteur pour stocker les notes enregistrées freq
+
 std::string specialNote("end"); // Note spéciale pour indiquer la fin de la séquence
 
 std::map<int, std::vector<float>> DicoMAP ;
 std::map<std::string, std::vector<float>> Dicoinstru ;
-//std::map<int,std::string> Commande;
+std::map<std::string, std::vector<float>> Dicocomm ;
+std::map<int, const char *> Dicovoix;
+
 
 void setup() {
   AudioMemory(150);
@@ -94,6 +98,8 @@ void setup() {
       delay(500);
     }
   }
+
+  
 }
 
 void playFile(const char *filename)
@@ -114,25 +120,37 @@ void playFile(const char *filename)
 
 
 void loop() {
+
+  
+  
   const char * son;
   const char * real_note;
-  
+
+
+  // Récupération des dicos
   DicoMAP = dico.getDicoMAP();
   Dicoinstru = dico.getDicoinstru();
+  Dicocomm = dico.getDicocomm();
+  Dicovoix = dico.getDicovoix();
 
-  std::string instru ;
+  static std::string instru ;
 
   static bool closed = false ;
   static bool opened = false;
   static bool played = false;
   static bool choosed = false;
+  static bool houssam = false;
+
+  static unsigned long lastNotetime = 0;
+  
 
 //  synth.setParamValue("gate_flute",1);
   
 
-  if (notefreq.available() and !closed) {
+  if (!closed and notefreq.available()) {
 
     float note = notefreq.read();
+    
     int key = dico.checkmap(note, DicoMAP); // Vérifie la note par rapport à dicoMAP
     
 
@@ -141,13 +159,40 @@ void loop() {
         opened = true; // Marque la porte comme ouverte pour ne pas y retourner
 
         // Jouer le son correspondant à l'ouverture
-        son = dico.vocal(key);
+        son = dico.vocal(1);
         playFile(son);
+        delay(500);
 
   
     }
+
+    if(key == 2 && !opened){
+      houssam = true;
+      opened = true; // Marque la porte comme ouverte pour ne pas y retourner
+
+      // Jouer le son correspondant à l'ouverture
+      son = dico.vocal(1);
+      playFile(son);
+      
+    }
+
+    if (houssam && opened && !closed){
+
+      float note_h = notefreq.read();
+      if (note_h > 200){
+       
+        Serial.printf("Note: %3.2f /n", note_h);
+  
+        recorder.addPlayedNote("",note_h);
+        recordedNotesfreq = recorder.freq();
+        
+        delay(300);
+        lastNotetime = millis();
+      }
+      
+    }
     
-    else if (key != 0 && opened && !closed) {
+    else if (!houssam && key != 0 && opened && !closed) {
 
  
       float prob = notefreq.probability();
@@ -159,36 +204,49 @@ void loop() {
 
       std::string PlayedNote = recorder.charToString(real_note);
       recorder.addPlayedNote(PlayedNote,note);
-
+      recordedNotesfreq = recorder.freq();
       
-      delay(500);
+      delay(400);
+      lastNotetime = millis();
       
     }
 
-    if (key == 8 && !closed ){
+    if (opened && !closed && recordedNotesfreq.size()>1 && (millis() - lastNotetime) >= 6000 ){
+      Serial.println("Finished");
       closed = true ;
       recorder.addPlayedNote(specialNote,0);
 
+      recordedNotes = recorder.Notes();
+      Serial.println("Recorded notes:");
+      for (const auto& note : recordedNotesfreq) {
+          Serial.printf("%.2f\n", note);         
+      }
+      son = dico.vocal(2);
+      playFile(son);
+      son = dico.vocal(3);
+      playFile(son);
+      Serial.println("Choisissez votre instrument"); // Assistant vocal parle 
+
       
     }
 
-    if (recorder.isSequenceFinished()){
-      recordedNotes = recorder.Notes();
-      recordedNotesfreq = recorder.freq();
-      Serial.println("Recorded notes:");
-      for (const auto& note : recordedNotes) {
-          Serial.printf("%s\n", note.c_str());
-      }
-      for (const auto& note : recordedNotesfreq) {
-          Serial.printf("%.2f\n", note);
-      
-      
+//    if (closed && recorder.isSequenceFinished()){
+//      
+//      recordedNotes = recorder.Notes();
+//      Serial.println("Recorded notes:");
+//      for (const auto& note : recordedNotesfreq) {
+//          Serial.printf("%.2f\n", note);         
+//      }
+//      
+//  son = dico.vocal(2);
+//  playFile(son);
+//  son = dico.vocal(3);
+//  playFile(son);
+//  Serial.println("Choisissez votre instrument"); // Assistant vocal parle  
+//  
+//  }
 }
-  Serial.println("Choisissez votre instrument"); // Assistant vocal parle  
-}
-}
-  if (!choosed and closed){
-    
+  if (closed and !choosed){
     if(notefreq.available()){
       
       float note = notefreq.read();
@@ -199,13 +257,31 @@ void loop() {
         
         instru = key;
         choosed = true;
+        recorder.playRecordedNotes(instru);
+        played = true ;
+        son = dico.vocal(4);
+        playFile(son);
+        
       }
     }
   }
 
-  if (!played and closed and choosed){
-    recorder.playRecordedNotes(instru);
-    played = true ;
+  if(played) {
+    if( notefreq.available()){
+      float note = notefreq.read();
+      std::string commande = dico.checkinstru(note,Dicocomm);
+      Serial.println(commande.c_str());
+      if(commande != "_violin" and commande != "_piano" and commande != "_guitar"){
+        recorder.commande(commande,instru,choosed,played,closed,lastNotetime,houssam);
+        delay(500);
+        if( commande =="other_instru" && !choosed && !played){
+          son = dico.vocal(3);
+          playFile(son);
+        }
+      
+    }
+    
   }
 
+}
 }

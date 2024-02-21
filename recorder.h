@@ -11,6 +11,7 @@
 class Recorder {
 public:
     // Constructeur
+//    std::vector<float> *recordedNotesfreq
     Recorder(Synth* s);
 
     // Méthode pour ajouter une note jouée
@@ -33,6 +34,8 @@ public:
     // conversion char to string
 
     std::string charToString(const char *charArray);
+
+    void commande(std::string commande,std::string instru, bool &choosed,bool &played, bool &closed,unsigned long &lastNotetime,bool &houssam);
 
 private:
     std::vector<std::string> recordedNotes; // Vecteur pour stocker les notes enregistrées

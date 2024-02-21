@@ -93,13 +93,18 @@ std::map<int, std::vector<float>> Dico::getDicoMAP() {
     return DicoMAP;
 }
 
+
+const std::map<std::string, std::vector<float>> Dico::getDicocomm() {
+    return Dicocomm;
+}
+
 std::map<std::string, std::vector<float>> Dico::getDicoinstru() {
     return Dicoinstru;
 }
 
-//std::map<int, std::string> Dico::getCommande() {
-//    return Voix;
-//}
+std::map<int, const char *> Dico::getDicovoix() {
+    return Voix;
+}
 
 
 
