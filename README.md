@@ -4,11 +4,15 @@ Pour installer ce projet, connectez le Teensy à un ordinateur via un câble USB
 
 Utilisation :
 
-Pour commencer, composez la note DO4 pour initier la composition des notes. Suivez ensuite les instructions fournies par le Teensy tout au long du processus. Vous pouvez choisir parmi plusieurs instruments pour synthétiser les différents sons. À la fin de la composition, trois commandes sont possibles : rejouer le même morceau, changer d'instrument, ou recommencer à zéro.
+Pour démarrer, commencez par jouer la note DO4 pour initier la composition des notes. Suivez ensuite les instructions données par l'assistant vocal pour ajouter d'autres notes à votre composition. Une fois la composition terminée, vous aurez le choix parmi plusieurs instruments pour la synthèse des sons.
+
+Après avoir joué les notes, trois commandes sont disponibles : vous pouvez choisir de rejouer le même morceau, de changer l'instrument utilisé, ou de recommencer à zéro pour créer une nouvelle composition.
 
 Structure du Projet :
 
-Le projet est développé en C++ avec Arduino ou Visual Studio Code pour gérer les différents dictionnaires et méthodes, ainsi que pour la synthèse des sons sur FaustIDE. Le code est compilé et exécuté sur le Teensy. Le fichier setup.ino gère les interactions avec l'utilisateur et les différentes méthodes. Les voix de l'assistant vocal sont stockées sur une carte SD avec différents fichiers audio.
+Le projet est développé en C++ à l'aide de l'environnement Arduino, qui offre diverses bibliothèques telles que audio.h pour la gestion des sons. L'algorithme clé du projet est la fonction notefreq, basée sur l'algorithme YIN pour la reconnaissance de fréquences. Ce code est écrit et géré dans l'environnement de développement Arduino, et il est spécifiquement conçu pour fonctionner sur le microcontrôleur Teensy.
+
+La synthèse des sons est réalisée à partir d'un fichier compilé créé sur FaustIDE, un environnement de développement pour la programmation audio et le traitement du signal. Les voix de l'assistant vocal sont stockées sur une carte SD, avec différents fichiers audio utilisés pour l'interaction avec l'utilisateur.
 
 Configuration :
 
