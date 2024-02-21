@@ -48,5 +48,7 @@ Contact :
 Pour toute question ou suggestion, veuillez nous contacter :
 
 Mikail Ounissi : mikail.ounissi@insa-lyon.fr
+
 Mahamat Tahir Saleh : tahir.mahamat-saleh@insa-lyon.fr
+
 Houssam Naym : houssam.naym@insa-lyon.fr
