@@ -22,7 +22,15 @@ La synthèse des sons est réalisée à partir d'un fichier compilé créé sur 
 
 Configuration :
 
-Vous pouvez configurer de nouveaux instruments en créant un nouveau fichier permettant de les synthétiser via Faust, puis en mettant à jour les bibliothèques. Vous pouvez également paramétrer les sons détectables dans les différents dictionnaires, ainsi que les voix de l'assistant vocal stockées sur la carte SD.
+Vous avez la possibilité d'ajouter de nouveaux instruments de deux manières :
+
+Via Faust : Vous pouvez créer un nouveau fichier Faust pour synthétiser de nouveaux instruments. Ensuite, vous pouvez associer ces instruments à la classe Synth et les intégrer dans votre projet en mettant à jour les bibliothèques nécessaires.
+
+En codant en C++ : Alternativement, vous pouvez coder de nouveaux instruments directement en C++. Vous pouvez ensuite les associer à la classe Synth et modifier les dictionnaires présents dans le fichier dico.h pour les inclure.
+
+En outre, vous pouvez ajuster le seuil de détection des fréquences dans le fichier dico.h pour mieux correspondre à vos besoins. De plus, vous avez la possibilité de modifier les voix de l'assistant vocal en ajoutant ou en modifiant les fichiers audio stockés sur la carte SD.
+
+Ces options vous offrent une flexibilité pour personnaliser votre projet en ajoutant de nouveaux instruments, en ajustant les paramètres de détection des fréquences et en modifiant les voix de l'assistant vocal selon vos préférences.
 
 Contributions :
 
