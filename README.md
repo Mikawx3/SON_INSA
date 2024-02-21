@@ -1,6 +1,8 @@
 A Particular MIDI Synthesizer
+
 Installation :
-Pour installer ce projet, connectez le Teensy à un ordinateur via un câble USB. Assurez-vous d'avoir un micro et une sortie audio connectés à l'ordinateur.
+
+Pour installer ce projet, connectez le Teensy à un ordinateur via un câble USB. Assurez-vous d'avoir un micro et une sortie audio connectés à l'ordinateur et d'une carte SD avec les fichiers vocaux nécessaire.
 
 Utilisation :
 
