@@ -49,6 +49,21 @@ Le code gère également des états tels que l'ouverture et la fermeture de la s
 
 En résumé, ce fichier contient le code de configuration et de gestion du système audio pour enregistrer, manipuler et jouer des séquences de notes dans un environnement Arduino.
 
+
+Explication du Code Faust
+
+Le code Faust fourni dans ce projet permet la synthèse sonore en utilisant des modèles physiques pour simuler différents instruments de musique. Voici un aperçu de son fonctionnement :
+
+Importation de bibliothèques : Le code importe des bibliothèques standard et personnalisées pour la synthèse sonore. Ces bibliothèques fournissent des modules et des fonctionnalités pour créer des instruments virtuels réalistes.
+
+Définition des paramètres : Des paramètres de contrôle tels que la fréquence, le gain, l'attaque et le decay sont définis à l'aide de curseurs (hslider) pour permettre une manipulation en temps réel des sons produits.
+
+Création d'oscillateurs et d'enveloppes : Des oscillateurs et des enveloppes sont créés pour moduler le son des instruments simulés. 
+
+Simulation d'instruments : Le code utilise des modèles physiques pour simuler des instruments tels que la flûte, le violon, la clarinette et la guitare. Chaque instrument est caractérisé par ses propres paramètres et comportements sonores.
+
+Processus audio principal : Les éléments audio sont reliés dans un processus principal, permettant de produire des sons complexes et harmonieux à partir des différentes sources sonores.
+
 Configuration :
 
 Vous avez la possibilité d'ajouter de nouveaux instruments de deux manières :
