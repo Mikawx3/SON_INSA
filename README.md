@@ -85,7 +85,7 @@ Vous pouvez contribuer en aidant à la synthèse des différents sons et à la g
 
 ## Auteurs :
 
-**Mahamat Tahir Saleh**
+**Tahir Saleh Mahamat **
 
 **Ounissi Mikail**
 
