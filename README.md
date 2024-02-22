@@ -63,6 +63,10 @@ Simulation d'instruments : Le code utilise des modèles physiques pour simuler d
 
 Processus audio principal : Les éléments audio sont reliés dans un processus principal, permettant de produire des sons complexes et harmonieux à partir des différentes sources sonores.
 
+## Fichiers Voix dans le Fichier Zip
+
+Le fichier zip nommé "voix" inclus dans ce projet contient les différentes voix utilisées par l'assistant vocal. Ces voix sont préenregistrées et doivent être placées dans la carte SD de l'appareil pour que l'assistant vocal puisse les utiliser efficacement. Assurez-vous de copier ces fichiers audio sur la carte SD et de configurer correctement l'appareil pour qu'il puisse y accéder lors de l'exécution.
+
 ## Configuration :
 
 Vous avez la possibilité d'ajouter de nouveaux instruments de deux manières :
